@@ -4,8 +4,7 @@ Created on 28/11/2010
 @author: emlyn
 '''
 
-import HelloWorldHandler
-from present import NoPathHandler, LearnHandler
+from rest import LearnHandler
 
 class InitApp(object):
     '''
@@ -19,9 +18,7 @@ class InitApp(object):
         
     def InitHandlers(self, aWebAppHandlers):
         aHandlers = [
-         ('/helloworld', HelloWorldHandler.HelloWorldHandler),
-         ('/learn', LearnHandler.LearnHandler),
-         ('/', NoPathHandler.NoPathHandler)
+         ('/learn', LearnHandler.LearnHandler)
         ]
         aWebAppHandlers.extend(aHandlers)
         

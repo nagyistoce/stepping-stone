@@ -8,6 +8,7 @@ class AuthenticatedBase(webapp.RequestHandler):
         if user:
             self.AuthenticatedGet(user)
         else:
+            # this isn't right, I need to just reject requests here
             self.redirect(users.create_login_url(self.request.uri))
 
     def post(self):
@@ -16,6 +17,7 @@ class AuthenticatedBase(webapp.RequestHandler):
         if user:
             self.AuthenticatedPost(user)
         else:
+            # this isn't right, I need to just reject requests here
             self.redirect(users.create_login_url(self.request.uri))
 
     def AuthenticatedGet(self, user):
