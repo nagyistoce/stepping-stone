@@ -4,5 +4,9 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /face
+  static_dir: face
+
 - url: /.*
   script: main.py
+  

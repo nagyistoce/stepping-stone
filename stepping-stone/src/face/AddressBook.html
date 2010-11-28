@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:ng="http://angularjs.org">
+<head>
+  <script type="text/javascript" src="./inc/angular/angular-0.9.5.js" ng:autobind></script></script>
+  <script type="text/javascript">
+    MyController = function($resource) {
+      this.People = $resource('people.json');
+    };
+    MyController.$inject = ['$resource'];
+	MyController.prototype = {
+		fetchPeople: function() {
+			this.people = this.People.query();
+		}
+	};
+  </script>
+</head>
+<body ng:controller="MyController" ng:init="$window.$root = this">
+	<h1>Address Book </h1>
+	<button ng:click="fetchPeople()">fetch</button>
+	<hr/>
+	<ul>
+		<li ng:repeat="person in people">{{person.name}}</li>
+	</ul>
+</body>
+</html>
