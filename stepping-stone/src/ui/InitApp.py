@@ -4,25 +4,29 @@ Created on 28/11/2010
 @author: emlyn
 '''
 
-from google.appengine.ext import webapp
-from google.appengine.api import users
+from ui.AuthTestHandler import AuthTestHandler
+from ui.NoAuthTestHandler import NoAuthTestHandler
+from ui.LogoutHandler import LogoutHandler
 
-class NoPathHandler(webapp.RequestHandler):
+class InitApp(object):
     '''
-    Do this if there is no handler for the request
+    This initialises the webapp application handler array
     '''
 
     def __init__(self):
         '''
         Constructor
         '''
-    
-    def get(self):
-        self.response.out.write('<h1>Stepping Stones</h1>')
-    
-    def post(self):
-        pass 
-    
+        
+    def InitHandlers(self, aWebAppHandlers):
+        aHandlers = [
+         ('/authtest', AuthTestHandler),
+         ('/noauthtest', NoAuthTestHandler),
+         ('/logout', LogoutHandler)
+        ]
+        aWebAppHandlers.extend(aHandlers)
+        
+        
 '''
 MIT License
 

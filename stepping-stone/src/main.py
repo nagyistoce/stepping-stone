@@ -6,11 +6,13 @@ Created on 27/11/2010
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-from rest.InitApp import InitApp
+from rest.InitApp import InitApp as restInitApp
+from ui.InitApp import InitApp as uiInitApp
 
 lwebapphandlers = []
  
-InitApp().InitHandlers(lwebapphandlers)
+restInitApp().InitHandlers(lwebapphandlers)
+uiInitApp().InitHandlers(lwebapphandlers)
 
 application = webapp.WSGIApplication(
     lwebapphandlers,

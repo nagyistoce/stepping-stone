@@ -7,10 +7,9 @@ Created on 28/11/2010
 from google.appengine.ext import webapp
 from google.appengine.api import users
 #from django.utils import simplejson as json
-import util.ssjson
 from data.Learn import Learn
+from rest import AuthenticatedBase
 from util import ssjson
-from present import AuthenticatedBase
 
 class LearnHandler(AuthenticatedBase.AuthenticatedBase):
     '''
