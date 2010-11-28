@@ -4,27 +4,35 @@ Created on 28/11/2010
 @author: emlyn
 '''
 
-import HelloWorldHandler
-from present import NoPathHandler, LearnHandler
+from google.appengine.ext import db
 
-class InitApp(object):
+class Learn(db.Model):
     '''
-    This initialises the webapp application handler array
+    A Learn Entity
     '''
 
-    def __init__(self):
-        '''
-        Constructor
-        '''
-        
-    def InitHandlers(self, aWebAppHandlers):
-        aHandlers = [
-         ('/helloworld', HelloWorldHandler.HelloWorldHandler),
-         ('/learn', LearnHandler.LearnHandler),
-         ('/', NoPathHandler.NoPathHandler)
-        ]
-        aWebAppHandlers.extend(aHandlers)
-        
+    name = db.StringProperty()
+    content = db.StringProperty(multiline=True)
+    lastModifiedBy = db.UserProperty(auto_current_user = True)
+    lastModifiedAt = db.DateTimeProperty(auto_now_add = True, required=True)
+    
+    def datum(self):
+        return {
+            "name": self.name, 
+            "content": self.content,
+            "lastModifiedBy": self.lastModifiedBy,
+            "lastModifiedAt": self.lastModifiedAt
+            }
+
+    def GetByName(cls, aName):
+        retval = None
+        lqry = Learn.all().filter('name =', aName)
+        litems = lqry.fetch(1)      
+        if litems:
+            retval = litems[0]
+        return retval
+    GetByName = classmethod(GetByName)
+    
         
 '''
 MIT License
