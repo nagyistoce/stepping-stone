@@ -4,28 +4,37 @@ Created on 28/11/2010
 @author: emlyn
 '''
 
-import HelloWorldHandler
-from present import NoPathHandler, LearnHandler
+from google.appengine.ext import webapp
+from google.appengine.api import users
+#from django.utils import simplejson as json
+import util.ssjson
+from data.Learn import Learn
+from util import ssjson
+from present import AuthenticatedBase
 
-class InitApp(object):
+class LearnHandler(AuthenticatedBase.AuthenticatedBase):
     '''
-    This initialises the webapp application handler array
+    REST interface for Learn entity
     '''
-
-    def __init__(self):
-        '''
-        Constructor
-        '''
+    
+    def get(self):
+        llearnName = self.request.get("name", None)
+        llearn = None
         
-    def InitHandlers(self, aWebAppHandlers):
-        aHandlers = [
-         ('/helloworld', HelloWorldHandler.HelloWorldHandler),
-         ('/learn', LearnHandler.LearnHandler),
-         ('/', NoPathHandler.NoPathHandler)
-        ]
-        aWebAppHandlers.extend(aHandlers)
+        if llearnName:
+            llearn = Learn.GetByName(llearnName)
         
-        
+        if llearn:
+            ljson = ssjson.dumps(llearn.datum())
+            self.response.headers["Content-Type"] = "application/json"
+            self.response.out.write(ljson)
+        else:
+            self.error(400) # bad request
+            self.response.out.write("Bad Request")
+    
+    def post(self):
+        pass 
+    
 '''
 MIT License
 

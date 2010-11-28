@@ -6,6 +6,10 @@ Created on 28/11/2010
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
+#from django.utils import simplejson as json
+import util.ssjson
+from data.Learn import Learn
+from util import ssjson
 
 class HelloWorldHandler(webapp.RequestHandler):
     '''
@@ -18,7 +22,14 @@ class HelloWorldHandler(webapp.RequestHandler):
         '''
     
     def get(self):
-        self.response.out.write('Hello, world!')
+        llearn = Learn()
+        llearn.name = u"HelloWorld"
+        llearn.content = u"Create a helloworld program."
+        llearn.put()
+        
+        ljson = ssjson.dumps(llearn.datum())
+        
+        self.response.out.write(ljson)
     
     def post(self):
         pass 
